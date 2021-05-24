@@ -1,3 +1,8 @@
+// Const
+const maxColor = 255;
+const length = 100;
+const distortion = 1.5 
+
 function add(point, offsetX, offsetY) {
     return {
         x: point.x + offsetX,
@@ -6,7 +11,7 @@ function add(point, offsetX, offsetY) {
 }
 
 function createDiamond(center, scale, color) {
-    var distortion = 1.5 
+    
     var left = add(center, -1 * scale, 0);
     var top = add(center, 0, -1 * scale * distortion);
     var right = add(center, scale, 0);
@@ -14,57 +19,45 @@ function createDiamond(center, scale, color) {
     return `<path  id="svg_7" d="M ${left.x} ${left.y} L ${top.x} ${top.y} L ${right.x} ${right.y} L ${bottom.x} ${bottom.y} Z" fill="#${color}${color}${color}"/>`
 }
 
+// Inputs
 const svgContainer = document.getElementById("svg");
-const controlContainer = document.getElementById("control")
-const center1xSlider = document.getElementById("center1x");
-const center2xSlider = document.getElementById("center2x");
-const center1ySlider = document.getElementById("center1y");
-const center2ySlider = document.getElementById("center2y");
-center1xSlider.oninput = () => render();
-center2xSlider.oninput = () => render();
-center1ySlider.oninput = () => render();
-center2ySlider.oninput = () => render();
+const centerGabSlider = document.getElementById("centerGab");
+const numberOfDiamondsSlider = document.getElementById("numberOfDiamonds");
+centerGabSlider.oninput = () => render();
+numberOfDiamondsSlider.oninput = () => render();
 
 function render() {
     var center1 = {
-        x: Number(center1xSlider.value),
-        y: Number(center1ySlider.value),
+        x: length / 2 - Number(centerGabSlider.value),
+        y: length / 2,
     }
     
     var center2 = {
-        x: Number(center2xSlider.value),
-        y: Number(center2ySlider.value),
+        x: length / 2 + Number(centerGabSlider.value),
+        y: length / 2,
     }
     
     var paths = "";
-    var scales = [30, 25, 20, 15, 10, 5]
-    var colors = ["00", "33", "66", "99", "bb", "ff"]
-    for (var index = 0; index <= 5; index++ ) {
-        paths += createDiamond(center1, scales[index], colors[index]);
-        paths += createDiamond(center2, scales[index], colors[index]);
+    var repetitions = Number(numberOfDiamondsSlider.value);
+    
+    for (var index = 0; index < repetitions; index++ ) {
+        var scale = length / 2 / distortion * (repetitions - index) / repetitions; 
+        var color = Math.floor(maxColor * index / repetitions).toString(16).padStart(2, "0");
+        paths += createDiamond(center1, scale, color) + "\n";
+        paths += createDiamond(center2, scale, color) + "\n";
     }
     
-   
-
-    
     var svgText = `
-    <svg width="800" height="800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-    <g id="Layer_1">
-     <title>Layer 1</title>
-     <g stroke="null" id="svg_9">
-     ${paths}     
-     </g>
-    </g>
+    <svg width="500" height="500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <g >
+        <title>Two Diamonds</title>
+        <g stroke="null">
+          ${paths}     
+        </g>
+      </g>
     </svg>
-    `
-    // <path  id="svg_7" d="M 45 50 L 55 35 L 65 50 L 55 65 Z" fill="#000000"/>    
-    {/* <g stroke="null" id="svg_9">
-    <path  id="svg_7" d="M 40 50 L 45 40 L 50 50 L 45 60 Z" fill="#eeeeee"/>
-    <path  id="svg_7" d="M 45 50 L 55 40 L 65 50 L 55 60 Z" fill="#eeeeee"/>
-    </g> */}
-    
+    `    
     svgContainer.innerHTML = svgText;
-    
 }
 
 render();

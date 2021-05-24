@@ -11,46 +11,27 @@
   <body>
     <div id="control">
       <div class="slidecontainer">
-        <label for="center1x">Center 1 X</label>
+        <label for="centerGab">Center 1 X</label>
         <input
           type="range"
-          min="1"
-          max="100"
-          value="45"
+          min="0"
+          max="10"
+          value="1.4"
           class="slider"
-          id="center1x"
+          step="0.01"
+          id="centerGab"
         />
-      </div>
-      <div class="slidecontainer">
-        <label for="center2x">Center 2 X</label>
-        <input
-          type="range"
-          min="1"
-          max="100"
-          value="55"
-          class="slider"
-          id="center2x"
-        />
+      </div>      
         <div class="slidecontainer">
-          <label for="center1y">Center 1 Y</label>
+          <label for="center1x">Number of diamonds</label>
           <input
             type="range"
             min="1"
-            max="100"
-            value="45"
+            max="40"
+            value="21"
             class="slider"
-            id="center1y"
-          />
-        </div>
-        <div class="slidecontainer">
-          <label for="center1x">Center 2 Y</label>
-          <input
-            type="range"
-            min="1"
-            max="100"
-            value="45"
-            class="slider"
-            id="center2y"
+            step="1"
+            id="numberOfDiamonds"
           />
         </div>
       </div>
