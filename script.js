@@ -49,7 +49,7 @@ function render() {
     }
     
     var svgText = `
-    <svg width="500" height="500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <svg width="600" height="600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
       <g >
         <title>Two Diamonds</title>
         <g stroke="null">
