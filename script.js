@@ -1,7 +1,6 @@
 // Const
 const maxColor = 255;
-const length = 100;
-const distortion = 1.5 
+const length = 100; 
 
 function add(point, offsetX, offsetY) {
     return {
@@ -10,8 +9,7 @@ function add(point, offsetX, offsetY) {
     }
 }
 
-function createDiamond(center, scale, color) {
-    
+function createDiamond(center, scale, color, distortion) {
     var left = add(center, -1 * scale, 0);
     var top = add(center, 0, -1 * scale * distortion);
     var right = add(center, scale, 0);
@@ -23,8 +21,10 @@ function createDiamond(center, scale, color) {
 const svgContainer = document.getElementById("svg");
 const centerGabSlider = document.getElementById("centerGab");
 const numberOfDiamondsSlider = document.getElementById("numberOfDiamonds");
+const distortionSlider = document.getElementById("distortion");
 centerGabSlider.oninput = () => render();
 numberOfDiamondsSlider.oninput = () => render();
+distortionSlider.oninput = () => render();
 
 function render() {
     var center1 = {
@@ -39,12 +39,13 @@ function render() {
     
     var paths = "";
     var repetitions = Number(numberOfDiamondsSlider.value);
+    var distortion = Number(distortionSlider.value);
     
     for (var index = 0; index < repetitions; index++ ) {
         var scale = length / 2 / distortion * (repetitions - index) / repetitions; 
         var color = Math.floor(maxColor * index / repetitions).toString(16).padStart(2, "0");
-        paths += createDiamond(center1, scale, color) + "\n";
-        paths += createDiamond(center2, scale, color) + "\n";
+        paths += createDiamond(center1, scale, color, distortion) + "\n";
+        paths += createDiamond(center2, scale, color, distortion) + "\n";
     }
     
     var svgText = `
